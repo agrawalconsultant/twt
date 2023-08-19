@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" type="x-icon" href="exam_shortcut.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Exam Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #000;
+        }
+        .container {
+            position: relative;
+            text-align: center;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        .message {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: white;
+            pointer-events: none;
+        }
+        .button {
+            display: inline-block;
+            font-size: 16px;
+            background: transparent;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-size: 2ch;
+            margin: 0;
+            padding: 0;
+            border-image: linear-gradient(to right, #ff0000, #6EFF00) 1;
+            border-image-slice: 1;
+            position: relative;
+            z-index: 1;
+            animation: animateBorder 2s linear infinite, animateHue 5s linear infinite;
+        }
+        @keyframes animateBorder {
+            0%, 100% {
+                border-image-source: linear-gradient(to right, #ff0000, #6EFF00);
+            }
+            50% {
+                border-image-source: linear-gradient(to right, #6EFF00, #ff0000);
+            }
+        }
+        @keyframes animateHue {
+            0% {
+                filter: hue-rotate(0deg);
+            }
+            100% {
+                filter: hue-rotate(360deg);
+            }
+        }
+        .button::after {
+            content: "";
+            display: block;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(to right, #ff0000, #6EFF00);
+            position: absolute;
+            bottom: 0px;
+            left: 0;
+            border-radius: 10px;
+            z-index: -111;
+        }
+        .cursor-image {
+            position: absolute;
+            pointer-events: none;
+            z-index: -11111;
+            height: 200px;
+        }
+        input {
+            bottom: 0px;
+            position: absolute;
+            transition: background .5s;
+            transition: all .8s;
+            background: transparent;
+            border: none;
+            outline: none;
+            border-image: linear-gradient(#FF0047, #6EFF00) 5;
+            z-index: -222;
+        }
+        #password1 {
+            height: 100px;
+            width: 100%;
+            background: linear-gradient(75deg, #ff0000, #ffb300 100%);
+            animation: animate 10s linear infinite;
+            border-radius: 50px;
+            pointer-events: none;
+        }
+        @keyframes animate {
+            0% {
+                filter: blur(300px) hue-rotate(0deg);
+            }
+            100% {
+                filter: blur(300px) hue-rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <p class="message">Currently, there are no scheduled exams for students at this time.</p>
+        <button class="button" onclick="redirectToExam()">Take Exam</button>
+    </div>
+    <input type="password" id="password1" name="password1" required>
+    <img src="cursor.png.png" alt="Cursor Image" class="cursor-image">
+    <script>
+        function redirectToExam() {
+            window.location.href = "exam02.html";}
+
+        document.addEventListener("mousemove", (e) => {
+            const cursorImage = document.querySelector(".cursor-image");
+            cursorImage.style.left = `${e.clientX - cursorImage.width / 2}px`;
+            cursorImage.style.top = `${e.clientY - cursorImage.height / 2}px`;
+        });
+    </script>
+</body>
+</html>
