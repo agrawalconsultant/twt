@@ -1,131 +1,155 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
-    <meta charset="UTF-8">
-    <link rel="shortcut icon" type="x-icon" href="exam_shortcut.png">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Exam Page</title>
+    <title>Students Exam</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            overflow: hidden;
+
+        *{
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        }
+
+        body {
+            margin: 0;
+            overflow: hidden;
+            height: 100vh;
+            width: auto;
+        }
+
+        canvas {
+            display: block;
+        }
+
+        #timer {
+            /* height: 100vh; */
+            position: absolute;
+            margin: 0;
+            padding: 0;
+            background: transparent;
+            pointer-events: none;
+            top: 40%;
+            left: 20%;
+            right: 20%;
+            bottom: 40%;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            background-color: #000;
-        }
-        .container {
-            position: relative;
-            text-align: center;
-            padding: 20px;
-            border-radius: 10px;
-        }
-        .message {
-            font-size: 20px;
-            margin-bottom: 20px;
-            color: white;
-            pointer-events: none;
-        }
-        .button {
-            display: inline-block;
-            font-size: 16px;
-            background: transparent;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            font-size: 2ch;
-            margin: 0;
-            padding: 0;
-            border-image: linear-gradient(to right, #ff0000, #6EFF00) 1;
-            border-image-slice: 1;
-            position: relative;
-            z-index: 1;
-            animation: animateBorder 2s linear infinite, animateHue 5s linear infinite;
-        }
-        @keyframes animateBorder {
-            0%, 100% {
-                border-image-source: linear-gradient(to right, #ff0000, #6EFF00);
-            }
-            50% {
-                border-image-source: linear-gradient(to right, #6EFF00, #ff0000);
-            }
-        }
-        @keyframes animateHue {
-            0% {
-                filter: hue-rotate(0deg);
-            }
-            100% {
-                filter: hue-rotate(360deg);
-            }
-        }
-        .button::after {
-            content: "";
-            display: block;
-            width: 100%;
-            height: 2px;
-            background: linear-gradient(to right, #ff0000, #6EFF00);
-            position: absolute;
-            bottom: 0px;
-            left: 0;
-            border-radius: 10px;
-            z-index: -111;
-        }
-        .cursor-image {
-            position: absolute;
-            pointer-events: none;
-            z-index: -11111;
-            height: 200px;
-        }
-        input {
-            bottom: 0px;
-            position: absolute;
-            transition: background .5s;
-            transition: all .8s;
-            background: transparent;
-            border: none;
-            outline: none;
-            border-image: linear-gradient(#FF0047, #6EFF00) 5;
-            z-index: -222;
-        }
-        #password1 {
-            height: 100px;
-            width: 100%;
-            background: linear-gradient(75deg, #ff0000, #ffb300 100%);
-            animation: animate 10s linear infinite;
-            border-radius: 50px;
-            pointer-events: none;
-        }
-        @keyframes animate {
-            0% {
-                filter: blur(300px) hue-rotate(0deg);
-            }
-            100% {
-                filter: blur(300px) hue-rotate(360deg);
-            }
+
         }
     </style>
 </head>
-<body>
-    <div class="container">
-        <p class="message">Currently, there are no scheduled exams for students at this time.</p>
-        <button class="button" onclick="redirectToExam()">Take Exam</button>
-    </div>
-    <input type="password" id="password1" name="password1" required>
-    <img src="cursor.png.png" alt="Cursor Image" class="cursor-image">
-    <script>
-        function redirectToExam() {
-            window.location.href = "https://docs.google.com/forms/d/e/1FAIpQLSf-17SrH5SR8xbUqtE4zz37RcfYGDk0o7eIplUbQXAZcRGFFw/viewform";}
 
-        document.addEventListener("mousemove", (e) => {
-            const cursorImage = document.querySelector(".cursor-image");
-            cursorImage.style.left = `${e.clientX - cursorImage.width / 2}px`;
-            cursorImage.style.top = `${e.clientY - cursorImage.height / 2}px`;
-        });
+<body>
+    <div id="timer">
+        <h1>Web-app is temporarily down for Maintenance</h1>
+        <p>We'll be back online in</p>
+        <p id="countdown"></p>
+    </div>
+
+    <canvas id="canvas"></canvas>
+    <script>
+
+
+        // Set the target date and time for the countdown
+        var targetDate = new Date("2023-08-25T15:28:54").getTime();
+
+        // Update the countdown every 1 second
+        var countdownInterval = setInterval(function () {
+            var now = new Date().getTime();
+            var timeRemaining = targetDate - now;
+
+            if (timeRemaining <= 0) {
+                clearInterval(countdownInterval);
+                // Redirect to the linked page when the timer finishes
+                window.location.href = "exam02.html";
+            }
+
+            var days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+            var hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+
+            document.getElementById("countdown").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s";
+        }, 1000);
+
+
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const balls = [];
+
+
+
+
+
+
+
+
+        class Ball {
+            constructor(x, y, radius, color) {
+                this.x = x;
+                this.y = y;
+                this.radius = radius;
+                this.color = color;
+                this.dy = 0;
+                this.gravity = 0.2;
+                this.friction = 0.99;
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+                ctx.fillStyle = this.color;
+                ctx.fill();
+            }
+
+            update() {
+                this.dy += this.gravity;
+                this.dy *= this.friction;
+                this.y += this.dy;
+
+                // Prevent the balls from going out of the canvas
+                if (this.y + this.radius > canvas.height) {
+                    this.y = canvas.height - this.radius;
+                    this.dy *= -1; // Bounce effect
+                }
+            }
+        }
+
+
+
+
+
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            balls.forEach(ball => {
+                ball.update();
+                ball.draw();
+            });
+
+            requestAnimationFrame(animate);
+        }
+
+        function createBall() {
+            const x = Math.random() * canvas.width;
+            const radius = Math.random() * 20 + 10;
+            const color = `rgb(${Math.random() * 255},${Math.random() * 255},${Math.random() * 255})`;
+            balls.push(new Ball(x, 0, radius, color));
+        }
+
+        canvas.addEventListener('click', createBall);
+
+        animate();
     </script>
 </body>
+
 </html>
